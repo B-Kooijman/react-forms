@@ -5,4 +5,19 @@
 
 input {
   margin: 10px;
+  width: 200px;
+}
+
+label {
+  display: inline-block;
+  width: 150px;
+  text-align: center;
+}
+
+span {
+  color: red;
+}
+
+button {
+  margin: 10px;
 }

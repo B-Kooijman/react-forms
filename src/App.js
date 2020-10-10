@@ -1,37 +1,65 @@
 import React from "react";
 import "./styles.css";
 import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+const formFields = {
+  firstName: "firstName",
+  lastName: "lastName",
+  email: "email"
+}
+
+const submitValidationSchema = yup.object().shape({
+  [formFields.firstName]: yup.string().required(),
+  [formFields.lastName]: yup.string().required(),
+  [formFields.email]: yup.string().email().required(),
+});
 
 export default function App() {
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors } = useForm({
+    resolver: yupResolver(submitValidationSchema)
+  });
+  
   const onSubmit = (data) => alert(JSON.stringify(data));
 
   return (
     <div className="App">
       <h1>React Hook Form</h1>
-      <h2>useForm example</h2>
+      <h2>useForm with Yup validation example</h2>
       <form id="submitform" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="firstName">First name</label>
+          <label htmlFor={formFields.firstName}>First name</label>
           <input
-            id="firstName"
-            name="firstName"
-            ref={register({ required: "This field is required" })}
+            id={formFields.firstName}
+            name={formFields.firstName}
+            ref={register}
           />
         </div>
-        {errors && errors.firstName?.message && (
-          <span>{errors.firstName.message}</span>
+        {errors && errors[formFields.firstName]?.message && (
+          <span>{errors[formFields.firstName].message}</span>
         )}
         <div>
-          <label htmlFor="lastName">Last name</label>
+          <label htmlFor={formFields.lastName}>Last name</label>
           <input
-            id="lastName"
-            name="lastName"
-            ref={register({ required: "This field is required" })}
+            id={formFields.lastName}
+            name={formFields.lastName}
+            ref={register}
           />
         </div>
-        {errors && errors.lastName?.message && (
-          <span>{errors.lastName.message}</span>
+        {errors && errors[formFields.lastName]?.message && (
+          <span>{errors[formFields.lastName].message}</span>
+        )}
+        <div>
+          <label htmlFor={formFields.email}>Email</label>
+          <input
+            id={formFields.email}
+            name={formFields.email}
+            ref={register}
+          />
+        </div>
+        {errors && errors[formFields.email]?.message && (
+          <span>{errors[formFields.email].message}</span>
         )}
         <br />
         <button>Submit</button>

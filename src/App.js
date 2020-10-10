@@ -10,16 +10,28 @@ export default function App() {
     <div className="App">
       <h1>React Hook Form</h1>
       <h2>useForm example</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="firstName">Firstname</label>
-        <input
-          id="firstName"
-          name="firstName"
-          ref={register({ required: "This field is required" })}
-        />
-
+      <form id="submitform" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label htmlFor="firstName">First name</label>
+          <input
+            id="firstName"
+            name="firstName"
+            ref={register({ required: "This field is required" })}
+          />
+        </div>
         {errors && errors.firstName?.message && (
           <span>{errors.firstName.message}</span>
+        )}
+        <div>
+          <label htmlFor="lastName">Last name</label>
+          <input
+            id="lastName"
+            name="lastName"
+            ref={register({ required: "This field is required" })}
+          />
+        </div>
+        {errors && errors.lastName?.message && (
+          <span>{errors.lastName.message}</span>
         )}
         <br />
         <button>Submit</button>
